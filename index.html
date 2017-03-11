@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GeoMadness</title>
+    <style>
+      label, input, textarea, button { display: block }
+      .round-1,.round-2,.round-3,.round-4,.round-5 {width:245px;list-style:none;margin:0;padding:0;font-size:12px;font-family:'Arial',sans-serif}
+      .round-1 .bottom,.round-2 .bottom,.round-3 .bottom,.round-4 .bottom{border-bottom:1px solid #ddd}
+      .round-2 .bottom { padding-bottom: 1px }
+      .round-3 .bottom { padding-bottom: 3px }
+      .round-4 .bottom { padding-bottom: 7px }
+      .round-5 .bottom { padding-bottom: 4px }
+      .round-1 > div {height:30px;}
+      .round-2 > div {height:60px}
+      .round-3 > div {height:120px}
+      .round-4 > div {height:240px}
+      .round-5 > div {height:480px}
+      .round {display:flex;flex-direction:column}
+      .explain {color:#b7b7b7}
+    </style>
+  </head>
+  <body>
+    <h1>GeoMadness <!-- - Pick Men's NCAA Basketball Brackets based of Location--></h1>
+    <p>
+      Given a set of geopoints with latitude and longitude, this will output
+      the winners of the school match up based on which school is closest to
+      a provided geopoint.
+    </p>
+
+    <label for="url">Load from URL</label>
+    <input type="text" name="url" />
+    <button id="fetch">Fetch</button>
+
+    <br>
+    Sample Data:
+    <a href="http://brwnll.com.s3-website-us-west-2.amazonaws.com/geomadness/data/largest-cities.json" class="sample">30 Largest US Cities</a>
+    <a href="http://brwnll.com.s3-website-us-west-2.amazonaws.com/geomadness/data/walmarts.json" class="sample">Walmarts Locatoins</a>
+
+    <label for="geopoints">GeoPoint JSON</label>
+    <pre>
+      Enter an array of objects.
+      Required object properties: name, latitude (or lat), longitude (or lng)
+    </pre>
+    <textarea id="geopoints" style="width:600px;height:300px;"></textarea>
+    <button id="run">Run</button>
+
+    <div id="status"></div>
+
+    <h4>Finals</h4>
+    <div style="display:flex">
+      <div id="finals-1" class="round round-1"></div>
+      <div id="finals-2" class="round round-2"></div>
+      <div id="finals-3" class="round round-3"></div>
+    </div>
+
+    <h4>South</h4>
+    <div style="display:flex">
+      <div id="south-1" class="round round-1"></div>
+      <div id="south-2" class="round round-2"></div>
+      <div id="south-3" class="round round-3"></div>
+      <div id="south-4" class="round round-4"></div>
+      <div id="south-5" class="round round-5"></div>
+    </div>
+
+    <h4>West</h4>
+    <div style="display:flex">
+      <div id="west-1" class="round round-1"></div>
+      <div id="west-2" class="round round-2"></div>
+      <div id="west-3" class="round round-3"></div>
+      <div id="west-4" class="round round-4"></div>
+      <div id="west-5" class="round round-5"></div>
+    </div>
+
+    <h4>East</h4>
+    <div style="display:flex">
+      <div id="east-1" class="round round-1"></div>
+      <div id="east-2" class="round round-2"></div>
+      <div id="east-3" class="round round-3"></div>
+      <div id="east-4" class="round round-4"></div>
+      <div id="east-5" class="round round-5"></div>
+    </div>
+
+    <h4>Midwest</h4>
+    <div style="display:flex">
+      <div id="midwest-1" class="round round-1"></div>
+      <div id="midwest-2" class="round round-2"></div>
+      <div id="midwest-3" class="round round-3"></div>
+      <div id="midwest-4" class="round round-4"></div>
+      <div id="midwest-5" class="round round-5"></div>
+    </div>
+
+    <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript"></script>
+  </body>
+</html>
