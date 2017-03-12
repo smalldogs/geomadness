@@ -9,7 +9,9 @@
   "author": "Dustin Brownell <dustin@smalldo.gs>",
   "license": "ISC",
   "dependencies": {
-    "geolib": "^2.0.22"
+    "geolib": "^2.0.22",
+    "lodash": "^4.17.4",
+    "lodash.flattendeep": "^4.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

@@ -1,5 +1,9 @@
 import geo from 'geolib'
 import schools from './schools'
+import map from './map'
+import flatten from 'lodash.flattendeep'
+
+map.render(() => map.drawCircles(flatten(schools)), 'schools')
 
 function fetchData(url) {
   if (!url) return alert('A Valid URL is Required')
@@ -33,6 +37,12 @@ for (let link of document.querySelectorAll('.sample')) {
   }
 }
 
+document.querySelector('#current-location').onclick = function() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    document.querySelector('#geopoints').value = `[{"name":"You","latitude":"${position.coords.latitude}","longitude":"${position.coords.longitude}"}]`
+  })
+}
+
 function addToList(selector, team) {
   let list = document.querySelector(selector)
 
@@ -43,6 +53,8 @@ function addToList(selector, team) {
 }
 
 document.querySelector('#run').onclick = function() {
+  this.innerHTML = 'Calculating....'
+
   let data = document.querySelector('#geopoints').value
 
   try {
@@ -58,6 +70,8 @@ document.querySelector('#run').onclick = function() {
       longitude: el.lng || el.longitude,
     }
   })
+
+  map.drawCircles(data, 'others', '#983c3c')
 
   for (let conference of schools) {
     for (let region of conference) {
@@ -128,7 +142,7 @@ document.querySelector('#run').onclick = function() {
 
         count++
 
-        status.innerHTML = `Processing reg[count] round ${round}...`
+        status.innerHTML = `Processing ${reg[count]} round ${round}...`
 
         let losers = []
         for (let i = 0; i < region.length; i += 2) {
@@ -163,6 +177,8 @@ document.querySelector('#run').onclick = function() {
   }
 
   let winner = finals.reduce((a, b) => a.nearest.distance < b.nearest.distance ? a : b)
-
+  status.innerHTML = `The winner is <strong>${winner.name}</strong>`
   addToList(`#finals-3`, winner)
+
+  this.innerHTML = 'Run'
 }

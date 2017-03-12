@@ -3,8 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <title>GeoMadness</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700" rel="stylesheet">
+
     <style>
+      html,body {font-family:'Roboto',Helvetica,Arial,sans-serif;}
+      h1,h2,h3,h4,h5,h6{font-family:'Roboto Condensed',sans-serif;font-weight:700;margin-top:40px;line-height:125%;}
       label, input, textarea, button { display: block }
+      input[type="text"] {width: 100%;padding: 0;height:32px;border: 1px solid rgba(27,31,35,0.15);margin-bottom: .7em;border-radius: 2px;font-size: 14px;}
+      textarea{padding:0;border: 1px solid rgba(27,31,35,0.15)}
       .round-1,.round-2,.round-3,.round-4,.round-5 {width:245px;list-style:none;margin:0;padding:0;font-size:12px;font-family:'Arial',sans-serif}
       .round-1 .bottom,.round-2 .bottom,.round-3 .bottom,.round-4 .bottom{border-bottom:1px solid #ddd}
       .round-2 .bottom { padding-bottom: 1px }
@@ -18,34 +26,62 @@
       .round-5 > div {height:480px}
       .round {display:flex;flex-direction:column}
       .explain {color:#b7b7b7}
+      .tooltip {position:absolute;background:#fff;color:#111;padding:3px 6px;z-index:999;border-radius:2px}
+      blockquote{font-size: 16px;border-radius: 3px;color: #334e58;padding: 10px;background-color: #f2f9fc;border: 1px solid #c9e6f2;margin: 0 0 20px;}
+      hr{border:0;border-top:1px solid rgba(27,31,35,0.15)}
+      .margin-bottom{margin-bottom:1em}
+      button { position: relative;display: inline-block;padding: 6px 12px;font-size: 14px;font-weight: 600;line-height: 20px;white-space: nowrap;vertical-align: middle;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-repeat: repeat-x;background-position: -1px -1px;background-size: 110% 110%;border: 1px solid rgba(27,31,35,0.2);border-radius: 0.25em;-webkit-appearance: none;-moz-appearance: none;appearance: none;color: #24292e;background-color: #eff3f6; background-image: -webkit-linear-gradient(270deg, #fafbfc 0%, #eff3f6 90%); background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);}
+      button.primary{color: #fff;background-color: #6bd034;background-image: -webkit-linear-gradient(270deg, #6bd034 0%, #469021 90%);background-image: linear-gradient(-180deg, #6bd034 0%, #469021 90%);}
     </style>
   </head>
   <body>
-    <h1>GeoMadness <!-- - Pick Men's NCAA Basketball Brackets based of Location--></h1>
-    <p>
-      Given a set of geopoints with latitude and longitude, this will output
-      the winners of the school match up based on which school is closest to
-      a provided geopoint.
-    </p>
+    <a href="https://github.com/smalldogs/geomadness"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
 
-    <label for="url">Load from URL</label>
-    <input type="text" name="url" />
-    <button id="fetch">Fetch</button>
+    <div style="text-align:center">
+      <h1>GeoMadness - Pick Men's NCAA Basketball Brackets based of Location</h1>
+      <p>
+        Given a set of geopoints with latitude and longitude, this will output
+        the winners of the school match up <strong>based on which school is closest to
+        a provided geopoint</strong>.
+      </p>
+    </div>
 
-    <br>
-    Sample Data:
-    <a href="http://brwnll.com.s3-website-us-west-2.amazonaws.com/geomadness/data/largest-cities.json" class="sample">30 Largest US Cities</a>
-    <a href="http://brwnll.com.s3-website-us-west-2.amazonaws.com/geomadness/data/walmarts.json" class="sample">Walmarts Locatoins</a>
+    <hr />
 
-    <label for="geopoints">GeoPoint JSON</label>
-    <pre>
-      Enter an array of objects.
-      Required object properties: name, latitude (or lat), longitude (or lng)
-    </pre>
-    <textarea id="geopoints" style="width:600px;height:300px;"></textarea>
-    <button id="run">Run</button>
+    <div style="display:flex">
+      <div style="width:30%;background:#f6f8fa;;padding:15px;border: 1px solid rgba(27,31,35,0.15);">
+      <label for="url">Load from URL</label>
+      <input type="text" name="url" />
+      <button id="fetch">Fetch</button>
 
-    <div id="status"></div>
+      <hr class="margin-bottom">
+      Sample Data:
+      <a href="https://www.brwnll.com/geomadness/data/largest-cities.json" class="sample">30 Largest US Cities</a>
+      &middot;
+      <a href="https://www.brwnll.com/geomadness/data/walmarts.json" class="sample">Walmarts Locations</a>
+      &middot;
+      <a href="#" id="current-location">Use My Location</a>
+
+      <hr class="margin-bottom">
+
+      <label for="geopoints">GeoPoint JSON</label>
+      <blockquote>
+        Enter an array of objects.
+        Required object properties: name, latitude (or lat), longitude (or lng)
+      </blockquote>
+      <textarea id="geopoints" style="width:100%;height:300px;"></textarea>
+      <div style="text-align:center;margin-top:1em">
+        <button id="run" class="primary">Run</button>
+      </div>
+    </div>
+    <div style="width:70%">
+      <div id="status"></div>
+
+      <svg style="width:100%" height="600"></svg>
+    </div>
+  </div>
+
+    <h2>2016</h2>
 
     <h4>Finals</h4>
     <div style="display:flex">
@@ -90,7 +126,8 @@
       <div id="midwest-5" class="round round-5"></div>
     </div>
 
-    <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+    <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
     <script src="app.js" type="text/javascript"></script>
   </body>
 </html>
