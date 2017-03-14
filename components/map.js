@@ -1,4 +1,4 @@
-import us from '../us.json'
+import us from '../data/us.json'
 
 const svg = d3.select("svg")
 const projection = d3.geoAlbersUsa();

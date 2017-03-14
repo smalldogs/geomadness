@@ -96,10 +96,10 @@ document.querySelector('#run').onclick = function() {
   }
 
   let reg = [
-    'south',
-    'west',
     'east',
-    'midwest'
+    'west',
+    'midwest',
+    'south'
   ]
 
   // Now, we fight
